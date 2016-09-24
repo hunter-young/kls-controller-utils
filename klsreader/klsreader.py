@@ -10,7 +10,6 @@ class ControllerConnector(object):
 
     def startSerial(self):
         self.connection = Serial(self.serialport, 19200, timeout=5)
-        print("Connected to motor controller")
 
     def getBytes(self, *commands):
         ser = self.connection
@@ -34,7 +33,7 @@ class KLSReader(object):
 
 if __name__ == "__main__":
     # change to the appropriate commport when running as __main__
-    serialport = '/dev/ttyUSB0'
+    serialport = 'COM4'
 
     controller = KLSReader(serialport)
     print("Connected to motor controller")
@@ -42,7 +41,7 @@ if __name__ == "__main__":
     try:
         while 1:
             data = controller.getData()
-            pprint(data.__dict__)
+            pprint(data)
             time.sleep(1)
 
     except KeyboardInterrupt:
