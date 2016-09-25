@@ -1,5 +1,5 @@
-#ifndef CONTROLLER_COMMAND_H
-#define CONTROLLER_COMMAND_H
+#ifndef CONTROLLERCOMMAND_H
+#define CONTROLLERCOMMAND_H
 
 #include <stdint.h>
 
