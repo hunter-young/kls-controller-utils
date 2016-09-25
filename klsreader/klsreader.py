@@ -3,6 +3,7 @@ from pprint import pprint
 from serial import Serial
 from protocol.controllerdata import *
 from protocol.controllercommand import *
+from sys import platform
 
 class ControllerConnector(object):
     def __init__(self, serialport):
@@ -33,7 +34,10 @@ class KLSReader(object):
 
 if __name__ == "__main__":
     # change to the appropriate commport when running as __main__
-    serialport = 'COM4'
+    if platform.startswith("win"):
+        serialport = 'COM4'
+    else:
+        serialport = '/dev/ttyACM0'
 
     controller = KLSReader(serialport)
     print("Connected to motor controller")
