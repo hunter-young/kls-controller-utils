@@ -40,7 +40,7 @@ class ControllerData():
         (self.throttle, self.brakePedal, self.brakeSwitch, self.footSwitch,
         self.forwardSwitch, self.reverse, self.hallA, self.hallB, self.hallC,
         self.batteryVoltage, self.motorTemp, self.controllerTemp, self.settingDir,
-        self.actualDir) = unpack('2x5B4?3B2?3x', data)
+        self.actualDir) = unpack('!2x5B4?3B2?3x', data)
 
     def _unpackPacketB(self, data):
-        (self.rpm, self.phaseCurrent) = unpack('>4x2H11x', data)
+        (self.rpm, self.phaseCurrent) = unpack('!4x2H11x', data)
