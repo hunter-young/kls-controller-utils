@@ -4,9 +4,12 @@
 #include <stdint.h> 				/* fixed width integers */
 #include <stdbool.h>				/* bool type */
 
+#define PACKET_LENGTH   19
+#define CRC_INDEX       18
+#define ERROR           -1
+
 enum packet_t { PACKET_A, PACKET_B };
 
-/* Actual network packet */
 struct packet_a {
 	uint8_t 	command;
 	uint8_t 	static_var;
@@ -49,9 +52,21 @@ struct packet_b {
     uint8_t     crc;
 };
 
-uint8_t 		_calculate_CRC(struct packet *pkt);
-bool 		    validate_checksum(struct packet *pkt);
-packet_t 		determine_packet_type(struct packet *pkt);
+struct generic_packet {
+    uint8_t     bytes[PACKET_LENGTH];
+};
 
+typedef struct {
+    struct packet_a a;
+    struct packet_b b;
+} _packets_struct;
+
+_packets_struct packets;
+
+uint8_t 		_calculate_CRC(struct generic_packet *pkt);
+bool 		    _validate_checksum(struct generic_packet *pkt);
+enum packet_t 	_determine_packet_type(struct generic_packet *pkt);
+void            _bytes_to_packet(struct generic_packet *pkt, uint8_t *bytes);
+void            import_bytes_to_packets(_packets_struct *pkts, uint8_t *bytes);
 
 #endif
