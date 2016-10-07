@@ -2,6 +2,7 @@
 #include <string.h>
 
 #include "controllerdata.h"
+#include "byteswap16.h"
 
 uint8_t _calculate_CRC(struct generic_packet *pkt) {
     uint8_t checksum = 0;
@@ -46,6 +47,9 @@ void import_bytes_to_packets(_packets_struct *pkts, uint8_t *bytes) {
                 break;
             case PACKET_B:
                 memcpy(&(pkts->b), &gpkt, sizeof(struct packet_b));
+                /* Need to convert 16+ bit ints to LE from BE */
+                pkts->b.rpm = BSWAP_16(pkts->b.rpm);
+                pkts->b.phase_current = BSWAP_16(pkts->b.phase_current);
                 break;
             default:
                 break;
